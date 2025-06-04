@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Manaim – A Beautiful Soul</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -57,6 +57,7 @@
       border: 4px solid #ffb6c1;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
     .images img:hover {
@@ -75,17 +76,6 @@
     p.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
     }
 
     .start-button {
@@ -122,6 +112,55 @@
     audio {
       display: none;
     }
+
+    /* Modal Styles */
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  animation: fadeInBg 0.5s ease;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  animation: zoomIn 0.5s ease;
+}
+
+/* Animations */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInBg {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
   </style>
 </head>
 <body>
@@ -129,8 +168,8 @@
     <h1>Manaim</h1>
 
     <div class="images">
-      <img src="Adobe Express - file (1).png" alt="Manaim Photo 1">
-      <img src="remove.photos-removed-background.png" alt="Manaim Photo 2">
+      <img src="Adobe Express - file (1).png" alt="Manaim Photo 1" onclick="openModal('Adobe Express - file (1).png')">
+      <img src="remove.photos-removed-background.png" alt="Manaim Photo 2" onclick="openModal('remove.photos-removed-background.png')">
     </div>
 
     <p>In your smile, the stars find their light.</p>
@@ -149,6 +188,11 @@
     <button class="start-button" onclick="playMusic()">Start</button>
   </div>
 
+  <!-- Modal for Image Preview -->
+  <div class="modal" id="imgModal" onclick="closeModal()">
+    <img id="modalImg" src="" alt="Full View">
+  </div>
+
   <script>
     const lines = document.querySelectorAll("p");
     lines.forEach((line, index) => {
@@ -162,6 +206,27 @@
       audio.play();
       document.querySelector(".start-button").style.display = "none";
     }
+
+    function openModal(src) {
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImg");
+
+  modalImg.src = src;
+  modal.classList.add("show");
+
+  // Restart animation
+  modalImg.style.animation = 'none';
+  void modalImg.offsetWidth; // Force reflow
+  modalImg.style.animation = 'zoomIn 0.5s ease';
+}
+
+    
+
+    function closeModal() {
+  document.getElementById("imgModal").classList.remove("show");
+}
+
+    
   </script>
 </body>
 </html>
